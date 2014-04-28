@@ -29,7 +29,7 @@ $_SESSION['id2'] =  get_ip_address();
 <!DOCTYPE html>
 <html>
   <head>
-    <title>tabarnakhiersoir.com - On s'en crisse!</title>
+    <title>tabarnakhiersoir.com - Tu l'as text&eacute</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -153,9 +153,9 @@ text-decoration:none;
 <div class="navbar navbar-fixed-top navbar-inverse">
 <div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.com</a>
 <ul class="nav">
-<li class="active"><a href="index.php">Textes</a></li>
+<li><a href="index.php">Textes</a></li>
 <li class="divider-vertical"></li>
-<li><a href="popular.php">Populaires</a></li>
+<li class="active"><a href="javascript:void(0);">Populaires</a></li>
 <li class="divider-vertical"></li>
 <li><a href="submit.php">Soumettre</a></li>
 <li class="divider-vertical"></li>
@@ -165,9 +165,9 @@ text-decoration:none;
 </div>
 </div>
 
-<form action="recherche.php" method="post">
+<form>
   <div class="input-append">
-    <input type="text" class="span2" name="search" placeholder="Indicatif, mot" style="color:#A81B4A;">
+    <input type="text" class="span2" placeholder="Entrez un indicatif ou un mot" style="color:#A81B4A;">
     <button type="submit" class="btn">Rechercher</button>
   </div>
 </form>
@@ -179,7 +179,7 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-if ($stmt = $mysqli->prepare("SELECT text, area_code, id, downvotes, upvotes FROM textes_general")) {
+if ($stmt = $mysqli->prepare("SELECT text, area_code, id, downvotes, upvotes FROM textes_general WHERE upvotes > 20 AND downvotes >20")) {
 
     $stmt->execute();
 

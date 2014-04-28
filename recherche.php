@@ -29,7 +29,7 @@ $_SESSION['id2'] =  get_ip_address();
 <!DOCTYPE html>
 <html>
   <head>
-    <title>tabarnakhiersoir.com - On s'en crisse!</title>
+    <title>tabarnakhiersoir.com - Tu l'as text&eacute</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -153,7 +153,7 @@ text-decoration:none;
 <div class="navbar navbar-fixed-top navbar-inverse">
 <div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.com</a>
 <ul class="nav">
-<li class="active"><a href="index.php">Textes</a></li>
+<li><a href="index.php">Textes</a></li>
 <li class="divider-vertical"></li>
 <li><a href="popular.php">Populaires</a></li>
 <li class="divider-vertical"></li>
@@ -167,7 +167,7 @@ text-decoration:none;
 
 <form action="recherche.php" method="post">
   <div class="input-append">
-    <input type="text" class="span2" name="search" placeholder="Indicatif, mot" style="color:#A81B4A;">
+    <input type="text" class="span2" name="search" id="search" placeholder="Indicatif, mot" style="color:#A81B4A;">
     <button type="submit" class="btn">Rechercher</button>
   </div>
 </form>
@@ -186,10 +186,20 @@ if ($stmt = $mysqli->prepare("SELECT text, area_code, id, downvotes, upvotes FRO
     /* bind variables to prepared statement */
 
     $stmt->bind_result($texte, $area_code, $index, $dislikes,$likes);
- 
+
+$texte = (string) $texte;
+$_POST['search'] = (string)  $_POST['search'];
+
+?><h4><?php echo "R&eacutesultats de la recherche sur '".$_POST['search']."'"; ?></h4><?php
+
     while ($stmt->fetch()) {
 
+if(strpos($texte, $_POST['search']) !== FALSE || strpos($area_code, $_POST['search']) !== FALSE)
+
+{
+
 $texte =urldecode($texte);
+
 
        ?>
 
@@ -311,6 +321,8 @@ width:20px;
 <?php
 
     }
+
+}
 
 }
 

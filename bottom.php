@@ -1,0 +1,1 @@
+<div style="bottom:5px; display:block;">2013 tabarnakhiersoir.com &bull; <a href="#">contact us</a> &bull; <a href="tandc.php">terms</a></div>

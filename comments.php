@@ -1,41 +1,41 @@
-<?php 
-session_start();
+<!-- Connecting to the database using info from selected message -->
 
-if (!$_SESSION['visited']){
-$_SESSION['visited']=array("table");
+<?php
+$q=$_GET["q"];
+
+$mysqli = new mysqli("tabarnakhiersoir.db.9179378.hostedresource.com", "tabarnakhiersoir", "Tabarnak!13", "tabarnakhiersoir");
+if ($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-if (!$_SESSION['visited2']){
-$_SESSION['visited2']=array("table");
-}
+if ($stmt = $mysqli->prepare("SELECT text, area_code, id, downvotes, upvotes FROM textes_general WHERE id = '".$q."'")) {
 
-function get_ip_address(){
-    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
-        if (array_key_exists($key, $_SERVER) === true){
-            foreach (explode(',', $_SERVER[$key]) as $ip){
-                $ip = trim($ip); // just to be safe
+    $stmt->execute();
 
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
-                    return $ip;
-                }
-            }
-        }
-    }
-}
-$_SESSION['id2'] =  get_ip_address();
-?>
+  $stmt->bind_result($texte, $area_code, $index, $dislikes,$likes);
 
+ 
+    while ($stmt->fetch()) {
+$texte =urldecode($texte);
+$texte =stripslashes($texte);
+
+    ?>
+
+
+<!--Official beginning of the page -->
 
 <!DOCTYPE html>
 <html>
   <head>
-    <title>tabarnakhiersoir.com - On s'en crisse!</title>
+    <title><?php echo $texte; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/custom.css" rel="stylesheet">
    
-    
+   
+   <!-- Javascript to handle likes AND dislikes --> 
     <script>
 function add_dislike(str)
 {
@@ -62,6 +62,7 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET","downvotecount.php?q="+str,true);
 xmlhttp.send();
 }
+
 function add_like(str)
 {
 if (str=="")
@@ -87,22 +88,13 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET","upvotecount.php?q="+str,true);
 xmlhttp.send();
 }
-
 </script>
     
     <!-- In-page CSS -->
 <style type="text/css">
-.social:hover
+a.social:hover
 {
 background-color:#FCDA90; 
-}
-
-.comments{color:rgb(87,10,37); }
-
-.comments:hover
-{
-color: pink;
-text-decoration:none;
 }
 
 .appreciation
@@ -124,33 +116,25 @@ padding:auto;
 -moz-border-radius: 4px;
 }
 
-.appreciation > a:hover
-{
-text-decoration: none;
-color:#A81B4A;
-}
-
-.appreciation:hover
-{
-color:#A81B4A;
-background-color:pink;
-text-decoration:none;
+a.appreciation:hover
+{background-color:red;
 }
 </style>
-    
+
+
   </head>
 
+<!-- Official body begins here -->
 
-  <body class="container" >
+<body>
+
+<!-- Include necessary javascript folders -->
 <script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 
-<?php 
-
- ?>
-
+<!-- This is the bar at the top of the page -->
 <br/>
-<div class="navbar navbar-fixed-top navbar-inverse">
+<div class="navbar navbar-fixed-top navbar-inverse" style="background-color:red;">
 <div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.com</a>
 <ul class="nav">
 <li class="active"><a href="index.php">Textes</a></li>
@@ -160,38 +144,10 @@ text-decoration:none;
 <li><a href="submit.php">Soumettre</a></li>
 <li class="divider-vertical"></li>
 <li><a href="apropos.html">A Propos</a></li>
-<li class="divider-vertical"></li>
 </ul>
 </div>
 </div>
 
-<form action="recherche.php" method="post">
-  <div class="input-append">
-    <input type="text" class="span2" name="search" placeholder="Indicatif, mot" style="color:#A81B4A;">
-    <button type="submit" class="btn">Rechercher</button>
-  </div>
-</form>
-
-<?php
-
-$mysqli = new mysqli("tabarnakhiersoir.db.9179378.hostedresource.com", "tabarnakhiersoir", "Tabarnak!13", "tabarnakhiersoir");
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
-
-if ($stmt = $mysqli->prepare("SELECT text, area_code, id, downvotes, upvotes FROM textes_general")) {
-
-    $stmt->execute();
-
-    /* bind variables to prepared statement */
-
-    $stmt->bind_result($texte, $area_code, $index, $dislikes,$likes);
- 
-    while ($stmt->fetch()) {
-
-$texte =urldecode($texte);
-
-       ?>
 
 <!-- La boîte qui contient le texte -->
 <div id="text-<?php printf("%s", $index); ?>" 
@@ -200,7 +156,7 @@ display:block;
 width: 480px;
 margin-bottom:15px;
 height:inherit;
- padding: 7px 15px 10px 15px; 
+ padding: 7px 15px 35px 15px; 
 color: #A81B4A; 
 background-color: #FCE6ED; 
 vertical-align:middle; 
@@ -210,9 +166,10 @@ line-height: 25px;
 border: 1px solid #F5AEC6;
 border-radius: 8px;"> 
 
-<?php printf("(%d)",$area_code); ?> <br/><?php printf(" %s", stripslashes($texte)); ?><br/>
+<!--Indicatif et texte -->
+<?php printf("(%d)",$area_code); ?> <br/><?php printf(" %s", $texte); ?><br/>
 
-
+<!-- Boutons Tabarnak et Tiguidou -->
 <div class="appreciation">
 <a href="javascript:void(0);" id="l-<?php echo $index; ?>"> 
 TIGUIDOU <span id="likes<?php echo(json_encode($index)); ?>"><?php echo $likes; ?></span>
@@ -225,6 +182,7 @@ TABARNAK <span id="dislikes<?php echo(json_encode($index)); ?>"><?php echo $disl
 </a>
 </div>
 
+<!-- Javascript pour gérer les likes et dislikes -->
 <script type="text/javascript">
 
 $('#d-<?php echo(json_encode($index)); ?>').click(function(){
@@ -303,52 +261,45 @@ width:20px;
    " title="Partagez le texte sur reddit!" href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false" class="social"> <img style="vertical-align:middle;" src="img/reddit_alien.png" alt="submit to reddit" border="0" /> </a>
 
 </div>
-
-<div style="padding-top:25px; display:block; font-size:0.8em;"><a class="comments" href="comments.php?q=<?php printf("%s", $index); ?>#disqus_thread"> commentaires </a></div>
-
    
 </div>
-<?php
 
+<!-- Commentaires DISQUS -->
+<div 
+style="width: 500px;
+color:rgb(87,10,37); " id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'tabarnakhiersoir'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+
+
+<?php
     }
 
 }
 
+
+
+$stmt->close();
+
+
+
 ?>
 
 
-
-<script type="text/javascript">// <![CDATA[
-$(document).ready(function () {
-        $('ul.nav > li').click(function (e) {
-            $('ul.nav > li').removeClass('active');
-            $(this).addClass('active');                
-        });            
-    });
-// ]]></script>
-
-
-
-<span style="text-align:center;">
-<?php 
-include("bottom.php");
-?>
-</span>
-     
-    
-    <script type="text/javascript">
-/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-var disqus_shortname = 'tabarnakhiersoir'; // required: replace example with your forum shortname
-
-/* * * DON'T EDIT BELOW THIS LINE * * */
-(function () {
-var s = document.createElement('script'); s.async = true;
-s.type = 'text/javascript';
-s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
 
 </body>
-  
+
 </html>
