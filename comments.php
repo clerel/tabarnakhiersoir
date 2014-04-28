@@ -3,7 +3,7 @@
 <?php
 $q=$_GET["q"];
 
-$mysqli = new mysqli("tabarnakhiersoir.db.9179378.hostedresource.com", "tabarnakhiersoir", "Tabarnak!13", "tabarnakhiersoir");
+$mysqli = new mysqli("localhost", "tabarnak_main", "Tabarnak!13", "tabarnak_main");
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
@@ -25,11 +25,16 @@ $texte =stripslashes($texte);
 <!--Official beginning of the page -->
 
 <!DOCTYPE html>
-<html>
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+  <head profile="http://www.w3.org/2005/10/profile">
+<link rel="icon" 
+      type="image/png" 
+      href="http://tabarnakhiersoir.ca/img/flagship.png">
     <title><?php echo $texte; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta property="og:image" content="http://tabarnakhiersoir.ca/img/flagship.png"/>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/custom.css" rel="stylesheet">
@@ -128,6 +133,8 @@ a.appreciation:hover
 
 <body>
 
+<?php include_once("analyticstracking.php") ?>
+
 <!-- Include necessary javascript folders -->
 <script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -135,7 +142,7 @@ a.appreciation:hover
 <!-- This is the bar at the top of the page -->
 <br/>
 <div class="navbar navbar-fixed-top navbar-inverse" style="background-color:red;">
-<div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.com</a>
+<div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.ca</a>
 <ul class="nav">
 <li class="active"><a href="index.php">Textes</a></li>
 <li class="divider-vertical"></li>
@@ -143,10 +150,21 @@ a.appreciation:hover
 <li class="divider-vertical"></li>
 <li><a href="submit.php">Soumettre</a></li>
 <li class="divider-vertical"></li>
-<li><a href="apropos.html">A Propos</a></li>
+<li><a href="apropos.php">A Propos</a></li>
 </ul>
 </div>
 </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-22700949-2', 'tabarnakhiersoir.ca');
+  ga('send', 'pageview');
+
+</script>
 
 
 <!-- La boîte qui contient le texte -->
@@ -225,7 +243,7 @@ width:20px;
     background-repeat:no-repeat;
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
-   " title="Poster le texte sur Twitter!" ></a>
+   " title="Poster le texte sur Twitter!"></a>
    
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
@@ -242,10 +260,11 @@ width:20px;
   background-repeat:no-repeat;
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;" title="Partagez avec vos amis Facebook!"
-  href="javascript:window.open('http://www.facebook.com/dialog/feed?app_id= 238503619633356&link=http://orionisgroup.com/bootstrap/comments.php?q=<?php printf("%s", $index); ?>&display=popup&redirect_uri=http://orionisgroup.com/bootstrap/comments.php?q=<?php printf("%s", $index); ?>', 'Twitter Share', 'width=700, height=350')" target="shit">
+  href="javascript:window.open('http://www.facebook.com/dialog/feed?app_id= 238503619633356&link=http://tabarnakhiersoir.ca/comments.php?q=<?php printf("%s", $index); ?>&display=popup&redirect_uri=http://tabarnakhiersoir.ca/comments.php?q=<?php printf("%s", $index); ?>', 'Facebook Share', 'width=700, height=350')" target="shit">
         </a>
+
         
-<!-- Bouton REDDIT -->
+<!-- Bouton REDDIT
 <a style="display:block;
 float:right;
 margin-right:5px;
@@ -260,9 +279,22 @@ width:20px;
 -moz-border-radius: 4px;
    " title="Partagez le texte sur reddit!" href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false" class="social"> <img style="vertical-align:middle;" src="img/reddit_alien.png" alt="submit to reddit" border="0" /> </a>
 
+-->
 </div>
-   
+ 
 </div>
+
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- coconut -->
+<div style="display:inline-block; text-align:center; width:100%; height:90px;"><ins class="adsbygoogle"
+     style="display:inline-block; text-align:center; width: 75%; height:90px;"
+     data-ad-client="ca-pub-4735696890523894"
+     data-ad-slot="8124013683"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
 
 <!-- Commentaires DISQUS -->
 <div 

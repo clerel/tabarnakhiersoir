@@ -29,7 +29,7 @@ $_SESSION['id2'] =  get_ip_address();
 <!DOCTYPE html>
 <html>
   <head>
-    <title>tabarnakhiersoir.com - Tu l'as text&eacute</title>
+    <title>tabarnakhiersoir.ca - Ils l'ont text&eacute hier soir. Il n'auraient pas du... </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -142,8 +142,23 @@ text-decoration:none;
 
 
   <body class="container" >
+
+<?php include_once("analyticstracking.php") ?>
 <script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-22700949-2', 'tabarnakhiersoir.ca');
+  ga('send', 'pageview');
+
+</script>
+
 
 <?php 
 
@@ -151,7 +166,7 @@ text-decoration:none;
 
 <br/>
 <div class="navbar navbar-fixed-top navbar-inverse">
-<div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.com</a>
+<div class="navbar-inner"><a class="brand" href="index.php">tabarnakhiersoir.ca</a>
 <ul class="nav">
 <li><a href="index.php">Textes</a></li>
 <li class="divider-vertical"></li>
@@ -159,22 +174,33 @@ text-decoration:none;
 <li class="divider-vertical"></li>
 <li><a href="submit.php">Soumettre</a></li>
 <li class="divider-vertical"></li>
-<li><a href="apropos.html">A Propos</a></li>
+<li><a href="apropos.php">A Propos</a></li>
 <li class="divider-vertical"></li>
 </ul>
 </div>
 </div>
 
+
+<div style="display:inline-block; text-align:center; width:100%; height:90px;" ><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- coconut -->
+<ins class="adsbygoogle" style="display:inline-block; text-align:center; width:60%; height:90px;"
+ 
+     data-ad-client="ca-pub-4735696890523894"
+     data-ad-slot="8124013683"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script><br/><br/>
+</div>
+<div style="margin-left:auto; margin-right:auto;">
 <form>
   <div class="input-append">
     <input type="text" class="span2" placeholder="Entrez un indicatif ou un mot" style="color:#A81B4A;">
     <button type="submit" class="btn">Rechercher</button>
   </div>
-</form>
-
+</form></div>
 <?php
 
-$mysqli = new mysqli("tabarnakhiersoir.db.9179378.hostedresource.com", "tabarnakhiersoir", "Tabarnak!13", "tabarnakhiersoir");
+$mysqli = new mysqli("localhost", "tabarnak_main", "Tabarnak!13", "tabarnak_main");
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
@@ -199,6 +225,8 @@ style="
 display:block;
 width: 480px;
 margin-bottom:15px;
+margin-left:auto;
+margin-right:auto;
 height:inherit;
  padding: 7px 15px 10px 15px; 
 color: #A81B4A; 
@@ -287,7 +315,7 @@ width:20px;
   href="javascript:window.open('http://www.facebook.com/dialog/feed?app_id= 238503619633356&link=http://orionisgroup.com/bootstrap/comments.php?q=<?php printf("%s", $index); ?>&display=popup&redirect_uri=http://orionisgroup.com/bootstrap/comments.php?q=<?php printf("%s", $index); ?>', 'Twitter Share', 'width=700, height=350')" target="shit">
         </a>
         
-<!-- Bouton REDDIT -->
+<!-- Bouton REDDIT 
 <a style="display:block;
 float:right;
 margin-right:5px;
@@ -301,7 +329,7 @@ width:20px;
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
    " title="Partagez le texte sur reddit!" href="http://www.reddit.com/submit" onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false" class="social"> <img style="vertical-align:middle;" src="img/reddit_alien.png" alt="submit to reddit" border="0" /> </a>
-
+-->
 </div>
 
 <div style="padding-top:25px; display:block; font-size:0.8em;"><a class="comments" href="comments.php?q=<?php printf("%s", $index); ?>#disqus_thread"> commentaires </a></div>
